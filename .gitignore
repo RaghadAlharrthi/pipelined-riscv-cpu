@@ -1,0 +1,12 @@
+# Compiled simulation binaries
+*_sim
+*_dbg
+pipeline_sim
+pipeline_dbg
+
+# Waveform output files
+*.vcd
+
+# Other generated junk
+*.out
+*.o
