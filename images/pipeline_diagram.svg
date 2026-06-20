@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="380" viewBox="0 0 900 380" font-family="Arial, sans-serif">
+  <rect width="900" height="380" fill="#ffffff"/>
+  <text x="450" y="36" font-size="22" font-weight="bold" text-anchor="middle" fill="#1F3864">5-Stage Pipelined RISC-V (RV32I) CPU</text>
+  <text x="450" y="60" font-size="13" text-anchor="middle" fill="#555">One instruction flows left to right; up to 5 instructions run at once</text>
+
+  <!-- Stage boxes -->
+  <g font-size="15" font-weight="bold" text-anchor="middle">
+    <rect x="40"  y="100" width="120" height="90" rx="10" fill="#DCE6F1" stroke="#1F3864"/>
+    <text x="100" y="135" fill="#1F3864">IF</text>
+    <text x="100" y="158" font-size="11" font-weight="normal" fill="#333">Fetch</text>
+    <text x="100" y="174" font-size="10" font-weight="normal" fill="#666">PC + imem</text>
+
+    <rect x="220" y="100" width="120" height="90" rx="10" fill="#D6E4D6" stroke="#1F3864"/>
+    <text x="280" y="130" fill="#1F3864">ID</text>
+    <text x="280" y="150" font-size="11" font-weight="normal" fill="#333">Decode</text>
+    <text x="280" y="166" font-size="10" font-weight="normal" fill="#666">control·regfile</text>
+    <text x="280" y="180" font-size="10" font-weight="normal" fill="#666">immgen</text>
+
+    <rect x="400" y="100" width="120" height="90" rx="10" fill="#FBE5D6" stroke="#1F3864"/>
+    <text x="460" y="135" fill="#1F3864">EX</text>
+    <text x="460" y="158" font-size="11" font-weight="normal" fill="#333">Execute</text>
+    <text x="460" y="174" font-size="10" font-weight="normal" fill="#666">alu + forwarding</text>
+
+    <rect x="580" y="100" width="120" height="90" rx="10" fill="#F4CCCC" stroke="#1F3864"/>
+    <text x="640" y="135" fill="#1F3864">MEM</text>
+    <text x="640" y="158" font-size="11" font-weight="normal" fill="#333">Memory</text>
+    <text x="640" y="174" font-size="10" font-weight="normal" fill="#666">dmem</text>
+
+    <rect x="760" y="100" width="100" height="90" rx="10" fill="#E1D5E7" stroke="#1F3864"/>
+    <text x="810" y="135" fill="#1F3864">WB</text>
+    <text x="810" y="158" font-size="11" font-weight="normal" fill="#333">Writeback</text>
+  </g>
+
+  <!-- pipeline register dividers -->
+  <g fill="#888">
+    <rect x="170" y="100" width="14" height="90" rx="3"/>
+    <rect x="350" y="100" width="14" height="90" rx="3"/>
+    <rect x="530" y="100" width="14" height="90" rx="3"/>
+    <rect x="710" y="100" width="14" height="90" rx="3"/>
+  </g>
+  <g font-size="9" fill="#666" text-anchor="middle">
+    <text x="177" y="205">IF/ID</text>
+    <text x="357" y="205">ID/EX</text>
+    <text x="537" y="205">EX/MEM</text>
+    <text x="717" y="205">MEM/WB</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#1F3864" stroke-width="2" marker-end="url(#a)">
+    <line x1="160" y1="145" x2="170" y2="145"/>
+    <line x1="184" y1="145" x2="220" y2="145"/>
+    <line x1="340" y1="145" x2="350" y2="145"/>
+    <line x1="364" y1="145" x2="400" y2="145"/>
+    <line x1="520" y1="145" x2="530" y2="145"/>
+    <line x1="544" y1="145" x2="580" y2="145"/>
+    <line x1="700" y1="145" x2="710" y2="145"/>
+    <line x1="724" y1="145" x2="760" y2="145"/>
+  </g>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2 L8 5 L2 8" fill="none" stroke="#1F3864" stroke-width="1.5"/></marker></defs>
+
+  <!-- hazard handling callout -->
+  <rect x="40" y="240" width="820" height="110" rx="10" fill="#F7F7F7" stroke="#ccc"/>
+  <text x="60" y="266" font-size="14" font-weight="bold" fill="#1F3864">Hazard handling</text>
+  <text x="60" y="290" font-size="12" fill="#333">Forwarding: fresh ALU results are bypassed from MEM/WB straight back to the EX inputs,</text>
+  <text x="60" y="308" font-size="12" fill="#333">so dependent instructions get correct values without waiting.</text>
+  <text x="60" y="330" font-size="12" fill="#333">Load-use stall: when a load is followed by an instruction that uses it, the pipeline freezes</text>
+  <text x="60" y="346" font-size="12" fill="#333">one cycle (PC and IF/ID held, a bubble inserted) before forwarding delivers the loaded value.</text>
+</svg>
