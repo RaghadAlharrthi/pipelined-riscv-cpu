@@ -6,7 +6,7 @@ A 32-bit RISC-V processor implementing a working subset of the RV32I base intege
 
 ## Pipeline architecture
 
-![Pipeline diagram](images/pipeline_diagram.svg)
+![Pipeline diagram](images/pipeline_diagram.png)
 
 ## Project structure
 
