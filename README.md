@@ -86,7 +86,3 @@ Requires Icarus Verilog (and optionally GTKWave for waveforms).
 - Verilog (RTL design)
 - Icarus Verilog (simulation)
 - GTKWave (waveform analysis)
-
-## Author
-
-Raghad Faleh Alharthi — Computer Engineering 
