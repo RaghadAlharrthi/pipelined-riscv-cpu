@@ -31,13 +31,14 @@ module pipeline_cpu (
         // demo program: ALU ops + a TAKEN beq that skips one instruction
         imem[0] = 32'h00500093; // addi x1, x0, 5
         imem[1] = 32'h00300113; // addi x2, x0, 3
-        imem[2] = 32'h0020F1B3; // and  x3, x1, x2   = 1
-        imem[3] = 32'h0020E233; // or   x4, x1, x2   = 7
-        imem[4] = 32'h0020C2B3; // xor  x5, x1, x2   = 6
-        imem[5] = 32'h0020A333; // slt  x6, x1, x2   = 0
-        imem[6] = 32'h00000463; // beq  x0, x0, +8   -> skip imem[7]
-        imem[7] = 32'h06300393; // addi x7, x0, 99   (SHOULD BE FLUSHED)
-        imem[8] = 32'h02A00413; // addi x8, x0, 42
+        imem[2] = 32'h00700393; // addi x7, x0, 7    (x7 = 7, a KNOWN value)
+        imem[3] = 32'h0020F1B3; // and  x3, x1, x2   = 1
+        imem[4] = 32'h0020E233; // or   x4, x1, x2   = 7
+        imem[5] = 32'h0020C2B3; // xor  x5, x1, x2   = 6
+        imem[6] = 32'h0020A333; // slt  x6, x1, x2   = 0
+        imem[7] = 32'h00000463; // beq  x0, x0, +8   -> skip imem[8]
+        imem[8] = 32'h06300393; // addi x7, x0, 99   (FLUSHED: x7 must stay 7)
+        imem[9] = 32'h02A00413; // addi x8, x0, 42
     end
     wire [31:0] if_instr = imem[pc[31:2]];
 

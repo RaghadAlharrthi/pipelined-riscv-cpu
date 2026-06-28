@@ -35,7 +35,7 @@ module pipeline_cpu_tb;
         check(4, 7);    // or   5|3
         check(5, 6);    // xor  5^3
         check(6, 0);    // slt  5<3 ? 0
-        check(7, 0);    // FLUSHED by taken branch (must stay 0)
+        check(7, 7);    // set to 7 before branch; overwrite-to-99 was FLUSHED
         check(8, 42);   // landed after branch
 
         if (errors == 0) $display("\nALL TESTS PASSED");

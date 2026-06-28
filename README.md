@@ -29,7 +29,6 @@ A 32-bit RISC-V processor implementing a working subset of the RV32I base intege
 | Module           | Role                                                     |
 |------------------|----------------------------------------------------------|
 | `pipeline_cpu.v` | Top-level CPU integrating all five stages                |
-| `pipe_reg.v`     | Generic pipeline register (supports stall and flush)     |
 | `forwarding.v`   | Forwarding unit (selects MEM/WB bypass for ALU operands) |
 | `hazard.v`       | Load-use hazard detection (generates the stall signal)   |
 | `alu.v`          | Arithmetic Logic Unit with zero flag                     |
@@ -53,16 +52,19 @@ The `add` right after the load triggers a one-cycle stall; forwarding then deliv
 
     addi x1, x0, 5
     addi x2, x0, 3
+    addi x7, x0, 7     # x7 = 7  (a known value, set before the branch)
     and  x3, x1, x2    # = 1
     or   x4, x1, x2    # = 7
     xor  x5, x1, x2    # = 6
     slt  x6, x1, x2    # = 0  (5 < 3 is false)
     beq  x0, x0, +8    # always taken -> skips the next instruction
-    addi x7, x0, 99    # FLUSHED, never commits  -> x7 stays 0
+    addi x7, x0, 99    # FLUSHED, never commits  -> x7 stays 7
     addi x8, x0, 42    # branch lands here
 
-Verified output: `x3 = 1`, `x4 = 7`, `x5 = 6`, `x6 = 0`, `x7 = 0` (flushed), `x8 = 42`.
-This exercises every ALU operation and proves the branch redirect/flush works: the wrong-path `addi x7` is killed before it can write a register.
+Verified output: `x3 = 1`, `x4 = 7`, `x5 = 6`, `x6 = 0`, `x7 = 7` (preserved), `x8 = 42`.
+This exercises every ALU operation and proves the branch redirect/flush works: x7 is set to 7
+before the branch, the taken branch skips the `addi x7, x0, 99`, and because that wrong-path
+instruction is flushed before reaching writeback, x7 keeps its original value of 7.
 
 ## Simulation waveform
 

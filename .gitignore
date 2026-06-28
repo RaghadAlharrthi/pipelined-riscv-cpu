@@ -10,3 +10,5 @@ pipeline_dbg
 # Other generated junk
 *.out
 *.o
+pipelined/sim
+*.vcd
