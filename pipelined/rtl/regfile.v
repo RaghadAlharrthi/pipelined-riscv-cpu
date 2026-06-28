@@ -11,6 +11,9 @@ module regfile (
 );
     // the 32 lockers, each 32 bits wide
     reg [31:0] regs [0:31];
+    // Note: registers are intentionally NOT reset. Like real register files,
+    // every register is written before it is read, so a reset would only add
+    // area/wiring with no functional benefit. x0 is forced to 0 on read below.
 
     // WRITE: on the clock edge, if enabled and not writing to x0
     always @(negedge clk) begin
